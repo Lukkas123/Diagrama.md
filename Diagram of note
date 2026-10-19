@@ -1,0 +1,28 @@
+Participants: Browser and Server
+
+1. Submit the form.
+
+2. The browser sends an HTTP POST request to the server endpoint /new_note.
+
+3. The server responds with the HTTP status code 302 Found.
+
+4. This response indicates a URL redirection. The server instructs the browser to make a new HTTP GET request to the URL specified in the Location header, which points to /notes.
+
+5. The browser reloads the Notes page. This reload triggers three additional HTTP requests to retrieve the following resources:
+- main.css — the stylesheet.
+- main.js — the JavaScript code.
+- data.json — the raw note data.
+Form Submission and Server-Side Processing
+6. The HTML <form> element uses the action and method attributes to define where and how the form data is submitted. In this case, the form sends an HTTP POST request to /new_note.
+
+7. The form data is sent in the body of the POST request.
+
+8. The server accesses the submitted data through the req.body property of the request object (req).
+
+9. The server creates a new note object and adds it to an array called notes.
+
+10. Each note object contains two fields:
+- content: stores the actual content of the note.
+- date: stores the date and time when the note was created.
+11. The server does not store new notes in a database. Therefore, all notes added during runtime are lost when the server restarts.
+
