@@ -2,20 +2,26 @@ sequenceDiagram
     participant browser
     participant server
 
-    Note right of browser: The user submits the form
-
-    Note right of browser: JavaScript intercepts the form submission using the onsubmit event handler
-    Note right of browser: e.preventDefault() prevents the default form submission behavior
-    Note right of browser: The browser creates a new note object containing content and date
-    Note right of browser: The new note is added to the notes array using notes.push(note)
-    Note right of browser: The browser clears the input field and redraws the notes list
-
-    browser->>server: POST /new_note_spa
-    Note right of browser: The request body contains the note as JSON
-    Note right of browser: Content-Type: application/json
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
     activate server
-    Note right of server: The server receives and processes the JSON data
-    server-->>browser: HTTP 201 Created
+    server-->>browser: HTML document
     deactivate server
 
-    Note right of browser: The browser remains on the same page without a redirect or additional HTTP requests
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: The CSS file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+    activate server
+    server-->>browser: The JavaScript file
+    deactivate server
+
+    Note right of browser: The browser starts executing the JavaScript code
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: JSON data containing existing notes
+    deactivate server
+
+    Note right of browser: The JavaScript callback function renders the notes on the page
